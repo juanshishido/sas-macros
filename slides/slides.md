@@ -49,6 +49,9 @@ they can be referenced anywhere in the program
 When they are defined inside of macros, however, they are local and can only
 be referenced within the macro
 
+It is possible, as we will see, to create global macro variables inside of
+macros by using the `%global` statement
+
 ## Use Cases
 
 Macro variables and macros are useful in situations where
@@ -224,6 +227,26 @@ A useful way to write text to a `.log` file is by using `%put`
 ```
 
 ## Macros
+
+So far, we've worked with macro variables
+
+Now, let's explore macros
+
+## Macros
+
+```
+%macro macro-name <(macro parameters)>;
+    macro text
+%mend <macro-name>;
+```
+
+Macro definitions always start with the `%macro` keyword followed by a macro
+name
+
+Macro parameters, which are optional, should be separated by commas
+
+Macro definitions always end with the `%mend` keyword, though the macro name is
+optional
 
 ## Parameters
 
