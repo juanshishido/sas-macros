@@ -125,9 +125,103 @@ quotes
 
 ## Periods
 
+In some cases, macro variables may only be part of a needed string
+
+Let's say we had the following SAS data sets: `us_gdp`, `ca_gdp`, `us_pop`, and
+`ca_pop`
+
+We could reference each of these four data sets individually
+
+Because we know about macro variables, however, we could create two references
+
+## Periods
+
+We could do something like the following
+
+```
+%let country = us;
+%let metric = gdp;
+```
+
+To reference `us_gdp`, we would do the following `&country._&metric`
+
+Notice the period (`.`) that appears before the underscore (`_`)
+
+## Periods
+
+Periods are used as delimiters that define the end of a macro variable
+
+Had we not included the period, SAS would have interpreted the first macro
+variable reference as `&country_`, which does not exist
+
+If the data set names did not include underscores, we could have simply used
+`&country&metric` because the ampersand (`&`) lets SAS know that its
+encountered a new macro variable
+
+## Periods
+
+In cases where a period is actually part of the name, we use double periods
+
+```
+%let filename = dlab;
+
+data &filename;
+    infile &filename..txt;
+    input ...;
+run;
+```
+
+The macro variable in the `infile` statement resolves to `dlab.txt`
+
 ## Double Ampersands
 
+In other cases, two macro variables might be used to reference a third
+
+```
+%let bldg = barrows;
+%let room = 350;
+%let barrows350 = dlab;
+```
+
+`&bldg&room` resolves to the value `barrows350`
+
+Because we also defined a macro variable with that name, we can use double
+ampersands
+
+`&&bldg&room` resolves to `&barrows350` which resolves to `dlab`
+
 ## Creating Macro Variables from DATA Steps
+
+We can also create macro variables using the `call symput` routine
+
+The syntax is as follows: `call symput(macro-variable, value)`
+
+## CALL SYMPUT
+
+```
+data _null_;
+    input campus $ enrollment;
+    call symput(campus, trim(left(enrollment)));
+datalines;
+berkeley 37581
+davis 35415
+la 43239
+;
+run;
+```
+
+This creates three macro variables
+
+## %PUT
+
+We can use the macro variables `&berkeley`, `&davis`, and `&la` anywhere in the
+SAS program in which they were created
+
+A useful way to write text to a `.log` file is by using `%put`
+
+```
+%put "The enrollment at Berkeley in 2014 was &berkeley.."
+```
 
 ## Macros
 
