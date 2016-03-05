@@ -176,7 +176,7 @@ run;
 
 The macro variable in the `infile` statement resolves to `dlab.txt`
 
-## Double Ampersands
+## Multiple Ampersands
 
 In other cases, two macro variables might be used to reference a third
 
@@ -188,10 +188,20 @@ In other cases, two macro variables might be used to reference a third
 
 `&bldg&room` resolves to the value `barrows350`
 
-Because we also defined a macro variable with that name, we can use double
-ampersands
+SAS resolves `&bldg` and then `&room`, concatenating those values
 
-`&&bldg&room` resolves to `&barrows350` which resolves to `dlab`
+## Multiple Ampersands
+
+Because we also defined a macro variable with that name, we can use multiple
+ampersands to access its value
+
+`&&&bldg&room` resolves to `&barrows350` which resolves to `dlab`
+
+Here is what the macro looks like during each scan:
+
+1. `&&bldg350`
+2. `&barrows350`
+3. `dlab`
 
 ## Creating Macro Variables from DATA Steps
 
